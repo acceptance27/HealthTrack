@@ -5,13 +5,15 @@ namespace App\Models;
 use App\Enums\UserRole;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
+/**
+ * A login account. Demographic details live on Patient, not here --
+ * a User row only answers "who is signing in and what may they do".
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory;
@@ -19,7 +21,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use TwoFactorAuthenticatable;
 
     protected $fillable = [
-        'barangay_id',
         'name',
         'email',
         'password',
@@ -42,29 +43,10 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function barangay(): BelongsTo
+    /** Only set for accounts with role = patient. */
+    public function patient(): HasOne
     {
-        return $this->belongsTo(Barangay::class);
-    }
-
-    public function patientProfile(): HasOne
-    {
-        return $this->hasOne(PatientProfile::class);
-    }
-
-    public function appointmentsAsPatient(): HasMany
-    {
-        return $this->hasMany(Appointment::class, 'patient_id');
-    }
-
-    public function appointmentsAsMidwife(): HasMany
-    {
-        return $this->hasMany(Appointment::class, 'midwife_id');
-    }
-
-    public function isAdmin(): bool
-    {
-        return $this->role === UserRole::Admin;
+        return $this->hasOne(Patient::class);
     }
 
     public function isMidwife(): bool
@@ -72,8 +54,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role === UserRole::Midwife;
     }
 
+    public function isHealthWorker(): bool
+    {
+        return $this->role === UserRole::HealthWorker;
+    }
+
     public function isPatient(): bool
     {
         return $this->role === UserRole::Patient;
+    }
+
+    public function isStaff(): bool
+    {
+        return $this->role->isStaff();
     }
 }

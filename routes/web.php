@@ -1,61 +1,84 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Patient\DashboardController as PatientDashboardController;
-use App\Http\Controllers\Patient\AppointmentController as PatientAppointmentController;
-use App\Http\Controllers\Patient\MedicalHistoryController as PatientMedicalHistoryController;
-use App\Http\Controllers\Midwife\DashboardController as MidwifeDashboardController;
-use App\Http\Controllers\Midwife\PatientController as MidwifePatientController;
-use App\Http\Controllers\Midwife\AppointmentController as MidwifeAppointmentController;
-use App\Http\Controllers\Midwife\MedicalRecordController;
-use App\Http\Controllers\Midwife\InventoryController;
-use App\Http\Controllers\AdminController;
+use App\Livewire\HealthWorker\Dashboard as HealthWorkerDashboard;
+use App\Livewire\HealthWorker\RegisterPatient;
+use App\Livewire\Midwife\Appointments;
+use App\Livewire\Midwife\Dashboard as MidwifeDashboard;
+use App\Livewire\Patient\Dashboard as PatientDashboard;
+use App\Livewire\Patient\HealthInformation;
+use App\Livewire\Patients\Index as PatientsIndex;
+use App\Livewire\Patients\Record as PatientsRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => redirect()->route('dashboard'));
+/*
+|--------------------------------------------------------------------------
+| Web routes
+|--------------------------------------------------------------------------
+|
+| Every page is a full-page Livewire component -- the route points straight
+| at a class in app/Livewire. There are no controllers in this project.
+|
+| Login, logout, password reset, email verification and the two-factor
+| challenge are NOT here: Laravel Fortify registers them. Adding a /login
+| route to this file would silently override Fortify's and break 2FA.
+|
+| See DOCS/02-adding-a-page.md.
+|
+*/
 
-// Guest routes
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [LoginController::class, 'show'])->name('login');
-    Route::post('/login', [LoginController::class, 'store']);
-});
+Route::redirect('/', '/dashboard');
 
-// Authenticated routes
 Route::middleware(['auth', 'verified'])->group(function (): void {
-    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
+    // Single entry point after login. Sends each role to its own home page.
     Route::get('/dashboard', function () {
-        return redirect()->route(match (Auth::user()->role->value) {
-            'midwife' => 'midwife.dashboard',
-            'patient' => 'patient.dashboard',
-            default => 'admin.dashboard',
-        });
+        return redirect()->route(Auth::user()->role->homeRoute());
     })->name('dashboard');
 
-    // Patient routes
-    Route::middleware('role:patient')->prefix('patient')->name('patient.')->group(function (): void {
-        Route::get('/dashboard', PatientDashboardController::class)->name('dashboard');
-        Route::get('/my-health-information', [PatientMedicalHistoryController::class, 'index'])->name('my-health-information');
-    });
+    /*
+    | Midwife -- clinical records and appointments.
+    */
+    Route::middleware('role:midwife')
+        ->prefix('midwife')
+        ->name('midwife.')
+        ->group(function (): void {
+            Route::get('/dashboard', MidwifeDashboard::class)->name('dashboard');
+            Route::get('/appointments', Appointments::class)->name('appointments');
+        });
 
-    // Midwife routes
-    Route::middleware('role:midwife')->prefix('midwife')->name('midwife.')->group(function (): void {
-        Route::get('/dashboard', MidwifeDashboardController::class)->name('dashboard');
-        Route::get('/patients', [MidwifePatientController::class, 'index'])->name('patients');
-        Route::get('/patients/{id}', [MidwifePatientController::class, 'show'])->name('patients.show');
-        Route::post('/patients/{id}/appointments', [MidwifePatientController::class, 'storeAppointment'])->name('patients.appointments.store');
-        Route::delete('/patients/{id}/appointments/{appointment}', [MidwifePatientController::class, 'destroyAppointment'])->name('patients.appointments.destroy');
-        Route::get('/appointments', [MidwifeAppointmentController::class, 'index'])->name('appointments');
-        Route::get('/appointments/{id}', [MidwifeAppointmentController::class, 'show'])->name('appointments.show');
-        Route::get('/medical-records', [MedicalRecordController::class, 'index'])->name('medical-records');
-        Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
-        Route::get('/inventory/vaccines', [InventoryController::class, 'vaccines'])->name('inventory.vaccines');
-        Route::get('/inventory/medicines', [InventoryController::class, 'medicines'])->name('inventory.medicines');
-    });
+    /*
+    | Shared staff pages -- both the midwife and the health worker need the
+    | patient list. What each may actually change is decided by PatientPolicy
+    | and ClinicalRecordPolicy, not by this route.
+    */
+    Route::middleware('role:midwife,health_worker')
+        ->prefix('patients')
+        ->name('patients.')
+        ->group(function (): void {
+            Route::get('/', PatientsIndex::class)->name('index');
+            Route::get('/{patient}', PatientsRecord::class)->name('show');
+        });
 
-    // Admin routes
-    Route::middleware('role:admin')->group(function (): void {
-        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    });
+    /*
+    | Health worker -- patient registration.
+    */
+    Route::middleware('role:health_worker')
+        ->prefix('health-worker')
+        ->name('health-worker.')
+        ->group(function (): void {
+            Route::get('/dashboard', HealthWorkerDashboard::class)->name('dashboard');
+            Route::get('/register-patient', RegisterPatient::class)->name('register-patient');
+        });
+
+    /*
+    | Patient portal -- read-only, as described in the study.
+    */
+    Route::middleware('role:patient')
+        ->prefix('patient')
+        ->name('patient.')
+        ->group(function (): void {
+            Route::get('/dashboard', PatientDashboard::class)->name('dashboard');
+            Route::get('/my-health-information', HealthInformation::class)->name('my-health-information');
+        });
 });

@@ -2,36 +2,33 @@
 
 namespace Database\Factories;
 
-use App\Models\LabValue;
+use App\Models\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<LabValue>
+ * @extends Factory<\App\Models\LabValue>
  */
 class LabValueFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         $tests = [
-            ['name' => 'Blood Pressure', 'unit' => 'mmHg', 'range' => '120/80'],
-            ['name' => 'Blood Sugar', 'unit' => 'mg/dL', 'range' => '70-100'],
-            ['name' => 'Cholesterol', 'unit' => 'mg/dL', 'range' => '<200'],
-            ['name' => 'Hemoglobin', 'unit' => 'g/dL', 'range' => '12-16'],
+            ['Haemoglobin', fake()->randomFloat(1, 9, 16), 'g/dL', '12.0 - 15.5'],
+            ['Fasting blood sugar', fake()->numberBetween(70, 180), 'mg/dL', '70 - 100'],
+            ['Total cholesterol', fake()->numberBetween(140, 260), 'mg/dL', '< 200'],
+            ['Blood pressure', fake()->numberBetween(100, 160).'/'.fake()->numberBetween(60, 100), 'mmHg', '120/80'],
         ];
-        $test = fake()->randomElement($tests);
-        
+
+        [$name, $value, $unit, $range] = fake()->randomElement($tests);
+
         return [
-            'created_by' => \App\Models\User::factory()->midwife(),
-            'test_name' => $test['name'],
-            'value' => fake()->numberBetween(50, 200),
-            'unit' => $test['unit'],
-            'reference_range' => $test['range'],
-            'tested_at' => fake()->date(),
+            'patient_id' => Patient::factory(),
+            'created_by' => null,
+            'test_name' => $name,
+            'value' => (string) $value,
+            'unit' => $unit,
+            'reference_range' => $range,
+            'tested_at' => fake()->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }

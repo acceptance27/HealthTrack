@@ -2,21 +2,35 @@
 
 namespace App\Livewire\Patient;
 
-use App\Models\Appointment;
-use App\Models\Diagnosis;
-use App\Models\DoctorNote;
+use App\Models\Patient;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Layout('components.layouts.app')]
+#[Title('My Dashboard')]
 class Dashboard extends Component
 {
     public function render()
     {
-        $user = auth()->user();
+        $patient = auth()->user()->patient;
+
+        // A patient account should always have a matching patient record, but
+        // if the link is missing show an empty state rather than a 500.
+        if (! $patient instanceof Patient) {
+            return view('livewire.patient.no-record');
+        }
 
         return view('livewire.patient.dashboard', [
-            'upcomingAppointments' => Appointment::where('patient_id', $user->id)->where('scheduled_at', '>=', now())->count(),
-            'diagnosesCount' => Diagnosis::where('patient_id', $user->id)->count(),
-            'notesCount' => DoctorNote::where('patient_id', $user->id)->count(),
+            'patient' => $patient,
+            'upcomingAppointments' => $patient->appointments()
+                ->upcoming()
+                ->orderBy('scheduled_at')
+                ->limit(5)
+                ->get(),
+            'upcomingCount' => $patient->appointments()->upcoming()->count(),
+            'diagnosisCount' => $patient->diagnoses()->count(),
+            'allergyCount' => $patient->allergies()->count(),
         ]);
     }
 }

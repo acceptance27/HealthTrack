@@ -1,133 +1,96 @@
-@php
-    $barangayName = Auth::user()->barangay->name ?? 'Unknown';
-    $lowStockTotal = $lowStockItems ?? $lowStockCount ?? 0;
-@endphp
+<div class="grid gap-4">
+    <x-page-header
+        title="Midwife Dashboard"
+        :subtitle="config('healthtrack.centre.name')"
+    >
+        <x-slot:aside>
+            <span class="ht-pill">{{ now()->format('l, d F Y') }}</span>
+        </x-slot:aside>
+    </x-page-header>
 
-<div class="max-w-7xl mx-auto p-6">
-    <header class="flex items-center justify-between mb-6">
-        <div>
-            <h1 class="text-2xl font-semibold text-gray-800">Midwife Dashboard</h1>
-            <p class="text-sm text-gray-500">BI-style overview for {{ now()->format('F d, Y') }} — Barangay {{ $barangayName }}.</p>
-
+    <div class="ht-metric-grid">
+        <div class="ht-metric">
+            <h3>Registered patients</h3>
+            <p style="color: var(--color-brand);">{{ $patientCount }}</p>
         </div>
-        <div class="flex items-center gap-3">
-            <button class="px-3 py-1 text-sm bg-amber-500 text-white rounded">Refresh</button>
-            <a href="{{ route('midwife.patients') }}" class="text-sm text-amber-600 hover:underline">Manage Patients</a>
+        <div class="ht-metric">
+            <h3>Appointments today</h3>
+            <p style="color: var(--color-brand-warm);">{{ $appointmentsToday }}</p>
         </div>
-    </header>
-
-    <!-- KPI row: four equal cards -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div class="card p-4 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-700 font-bold">P</div>
-            <div>
-                <div class="text-xs text-gray-500">Total Patients</div>
-                <div class="text-2xl font-extrabold">{{ $patientsCount ?? 0 }}</div>
-            </div>
+        <div class="ht-metric">
+            <h3>Upcoming appointments</h3>
+            <p>{{ $upcomingCount }}</p>
         </div>
+    </div>
 
-        <div class="card p-4 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-600 font-bold">A</div>
-            <div>
-                <div class="text-xs text-gray-500">Appointments Today</div>
-                <div class="text-2xl font-extrabold text-green-600">{{ $appointmentsToday ?? 0 }}</div>
-            </div>
-        </div>
+    <div class="grid gap-4 lg:grid-cols-[2fr_1fr]">
+        <div class="ht-panel">
+            <h2>Today's schedule</h2>
 
-        <div class="card p-4 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-600 font-bold">F</div>
-            <div>
-                <div class="text-xs text-gray-500">Pending Follow-ups</div>
-                <div class="text-2xl font-extrabold text-amber-600">{{ $pendingFollowUps ?? 0 }}</div>
-            </div>
-        </div>
-
-        <div class="card p-4 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-red-600 font-bold">I</div>
-            <div>
-                <div class="text-xs text-gray-500">Low Stock Items</div>
-                <div class="text-2xl font-extrabold text-red-600">{{ $lowStockTotal }}</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Charts row: main KPI chart + two small widgets -->
-    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div class="card p-4 lg:col-span-2">
-            <h3 class="text-lg font-medium mb-3">Patient Coverage (7 days)</h3>
-            <div class="h-56 bg-gradient-to-b from-white to-gray-50 rounded border flex items-center justify-center text-gray-400">[Chart placeholder]</div>
-        </div>
-
-        <div class="card p-4">
-            <h3 class="text-lg font-medium mb-3">Inventory Trend</h3>
-            <div class="h-56 bg-gradient-to-b from-white to-gray-50 rounded border flex items-center justify-center text-gray-400">[Sparkline]</div>
-        </div>
-    </section>
-
-    <!-- Details row: snapshot table + alerts/actions -->
-    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div class="card p-4 lg:col-span-2">
-            <h3 class="text-lg font-medium mb-3">Clinic Snapshot</h3>
-            <table class="mw-status-table">
-                <tbody>
-                    <tr>
-                        <th>Registered Patients</th>
-                        <td class="text-right">{{ $patientsCount ?? 0 }}</td>
-                    </tr>
-                    <tr>
-                        <th>Scheduled Today</th>
-                        <td class="text-right">{{ $appointmentsToday ?? 0 }}</td>
-                    </tr>
-                    <tr>
-                        <th>Follow-up Queue</th>
-                        <td class="text-right">{{ $pendingFollowUps ?? 0 }}</td>
-                    </tr>
-                    <tr>
-                        <th>Inventory Alerts</th>
-                        <td class="text-right">{{ $lowStockTotal }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <aside class="card p-4">
-            <h3 class="text-lg font-medium mb-3">Alerts & Actions</h3>
-            <div class="space-y-3">
-                <a href="{{ route('midwife.inventory') }}" class="block p-3 bg-red-50 text-red-700 rounded border">{{ $lowStockTotal > 0 ? $lowStockTotal . ' items need restock' : 'No critical alerts' }}</a>
-                <a href="{{ route('midwife.appointments') }}" class="block p-3 bg-white rounded border">Open Appointments</a>
-                <a href="{{ route('midwife.patients') }}" class="block p-3 bg-white rounded border">Manage Patients</a>
-            </div>
-        </aside>
-    </section>
-
-    <!-- Bottom row: recent lists -->
-    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="card p-4">
-            <h3 class="text-lg font-medium mb-3">Recent Appointments</h3>
-            @if(!empty($recentAppointments ?? []))
-                <ul class="divide-y">
-                    @foreach($recentAppointments as $appt)
-                        <li class="py-2 flex justify-between items-center">
-                            <div>
-                                <div class="text-sm font-medium">{{ $appt->patient_name ?? 'Unknown' }}</div>
-                                <div class="text-xs text-gray-500">{{ optional($appt->scheduled_at)->format('M d, H:i') }}</div>
-                            </div>
-                            <div class="text-sm text-gray-600">{{ $appt->status ?? '' }}</div>
-                        </li>
-                    @endforeach
-                </ul>
+            @if ($todaysAppointments->isEmpty())
+                <div class="ht-empty">Nothing scheduled for today.</div>
             @else
-                <div class="text-sm text-gray-500">No appointments scheduled for today.</div>
+                <div class="ht-table-scroll">
+                    <table class="ht-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($todaysAppointments as $appointment)
+                                <tr>
+                                    <td class="whitespace-nowrap font-bold">
+                                        {{ $appointment->scheduled_at->format('g:i A') }}
+                                    </td>
+                                    <td>
+                                        @if ($appointment->patient)
+                                            <a href="{{ route('patients.show', $appointment->patient) }}"
+                                               style="color: var(--color-brand-strong); font-weight: 700;">
+                                                {{ $appointment->patient->fullName() }}
+                                            </a>
+                                        @else
+                                            <span class="ht-muted">Unknown</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $appointment->reason }}</td>
+                                    <td><span class="ht-pill">{{ ucfirst($appointment->status->value) }}</span></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             @endif
         </div>
 
-        <div class="card p-4">
-            <h3 class="text-lg font-medium mb-3">Inventory Status</h3>
-            <div class="text-sm text-gray-600">{{ $lowStockTotal > 0 ? $lowStockTotal . ' item(s) need restocking.' : 'No critical low stock items at the moment.' }}</div>
+        <div class="ht-panel">
+            <h2>Recently registered</h2>
 
-            <div class="mt-4">
-                <a href="{{ route('midwife.inventory') }}" class="text-sm text-amber-600 hover:underline">Open Inventory</a>
-            </div>
+            @if ($recentPatients->isEmpty())
+                <div class="ht-empty">No patients yet.</div>
+            @else
+                <ul class="m-0 grid list-none gap-2 p-0">
+                    @foreach ($recentPatients as $patient)
+                        <li>
+                            <a href="{{ route('patients.show', $patient) }}"
+                               class="block rounded-xl p-3 text-sm"
+                               style="background: var(--color-surface-muted); color: var(--color-ink);">
+                                <span class="font-bold">{{ $patient->fullName() }}</span>
+                                <span class="ht-muted block text-xs">
+                                    Registered {{ $patient->created_at->diffForHumans() }}
+                                </span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+
+            <a href="{{ route('patients.index') }}" class="ht-button ht-button-muted mt-3">
+                View all patients
+            </a>
         </div>
-    </section>
+    </div>
 </div>

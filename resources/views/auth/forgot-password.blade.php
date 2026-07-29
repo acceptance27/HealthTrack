@@ -1,8 +1,36 @@
-<x-app-layout>
-    <form method="POST" action="{{ route('password.email') }}" class="mx-auto max-w-md space-y-4 rounded-lg border border-slate-200 bg-white p-6">
+<x-layouts.guest title="Forgot password">
+    <h1 class="mb-1 text-xl font-bold">Forgot your password?</h1>
+    <p class="ht-muted mb-4 text-sm">
+        Enter your email address and we will send you a link to set a new password.
+    </p>
+
+    @if (session('status'))
+        <div class="mb-4 rounded-xl p-3 text-sm"
+             style="background: rgba(15, 107, 95, 0.08); color: var(--color-brand-strong);">
+            {{ session('status') }}
+        </div>
+    @endif
+
+    @error('email')
+        <div class="mb-4 rounded-xl p-3 text-sm"
+             style="background: rgba(178, 69, 62, 0.08); color: var(--color-danger);">
+            {{ $message }}
+        </div>
+    @enderror
+
+    <form method="POST" action="{{ route('password.email') }}" class="grid gap-3">
         @csrf
-        <h1 class="text-xl font-semibold">Reset password</h1>
-        <input name="email" type="email" placeholder="Email" required class="w-full rounded-md border-slate-300">
-        <x-primary-button type="submit">Send reset link</x-primary-button>
+
+        <label class="ht-field">
+            <span>Email address</span>
+            <input type="email" name="email" value="{{ old('email') }}"
+                   required autofocus class="ht-input">
+        </label>
+
+        <button type="submit" class="ht-button">Email password reset link</button>
+
+        <a href="{{ route('login') }}" class="ht-muted text-center text-xs underline">
+            Back to sign in
+        </a>
     </form>
-</x-app-layout>
+</x-layouts.guest>

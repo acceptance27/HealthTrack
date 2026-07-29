@@ -4,24 +4,35 @@ namespace App\Policies;
 
 use App\Models\Appointment;
 use App\Models\User;
-use App\Policies\Concerns\ChecksBarangayAccess;
 
 class AppointmentPolicy
 {
-    use ChecksBarangayAccess;
+    public function viewAny(User $user): bool
+    {
+        return $user->isStaff();
+    }
 
     public function view(User $user, Appointment $appointment): bool
     {
-        return $this->ownsPatientRecord($user, $appointment) || $this->sameBarangay($user, $appointment);
+        return $user->isStaff() || $appointment->patient?->user_id === $user->id;
     }
 
+    /**
+     * Scheduling is the midwife's responsibility. Patients cannot book --
+     * the study describes patient access as read-only.
+     */
     public function create(User $user): bool
     {
-        return $user->isPatient() || $user->isMidwife() || $user->isAdmin();
+        return $user->isMidwife();
     }
 
     public function update(User $user, Appointment $appointment): bool
     {
-        return $this->sameBarangay($user, $appointment);
+        return $user->isMidwife();
+    }
+
+    public function delete(User $user, Appointment $appointment): bool
+    {
+        return $user->isMidwife();
     }
 }

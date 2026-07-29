@@ -1,8 +1,25 @@
-<x-app-layout>
-    <form method="POST" action="{{ route('password.confirm') }}" class="mx-auto max-w-md space-y-4 rounded-lg border border-slate-200 bg-white p-6">
+<x-layouts.guest title="Confirm password">
+    <h1 class="mb-1 text-xl font-bold">Confirm your password</h1>
+    <p class="ht-muted mb-4 text-sm">
+        Please confirm your password before continuing.
+    </p>
+
+    @error('password')
+        <div class="mb-4 rounded-xl p-3 text-sm"
+             style="background: rgba(178, 69, 62, 0.08); color: var(--color-danger);">
+            {{ $message }}
+        </div>
+    @enderror
+
+    <form method="POST" action="{{ route('password.confirm') }}" class="grid gap-3">
         @csrf
-        <h1 class="text-xl font-semibold">Confirm password</h1>
-        <input name="password" type="password" required class="w-full rounded-md border-slate-300">
-        <x-primary-button type="submit">Confirm</x-primary-button>
+
+        <label class="ht-field">
+            <span>Password</span>
+            <input type="password" name="password" required autofocus
+                   autocomplete="current-password" class="ht-input">
+        </label>
+
+        <button type="submit" class="ht-button">Confirm</button>
     </form>
-</x-app-layout>
+</x-layouts.guest>

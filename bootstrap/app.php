@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Middleware\EnsureUserHasRole;
-use App\Http\Middleware\RedirectByRole;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,9 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Used as role:midwife / role:midwife,health_worker in routes/web.php.
         $middleware->alias([
             'role' => EnsureUserHasRole::class,
-            'redirect.by.role' => RedirectByRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

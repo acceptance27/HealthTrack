@@ -2,26 +2,34 @@
 
 namespace Database\Factories;
 
-use App\Models\MedicalHistory;
+use App\Models\Patient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<MedicalHistory>
+ * @extends Factory<\App\Models\MedicalHistory>
  */
 class MedicalHistoryFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        // Condition and details are picked as a pair -- see DiagnosisFactory.
+        $history = [
+            ['Asthma', 'Diagnosed in childhood. Uses an inhaler during episodes, with no hospital admissions in recent years.'],
+            ['Chickenpox', 'Had it as a child and recovered fully, with no complications.'],
+            ['Dengue fever', 'Admitted for three days and treated with fluids. Made a complete recovery.'],
+            ['Appendectomy', 'Appendix removed. The wound healed without complication.'],
+            ['Tuberculosis (treated)', 'Completed the full six-month course of treatment and was declared clear.'],
+            ['Caesarean section', 'Delivered by caesarean section. Mother and baby were both well afterwards.'],
+        ];
+
+        [$condition, $details] = fake()->randomElement($history);
+
         return [
-            'created_by' => \App\Models\User::factory()->midwife(),
-            'condition' => fake()->randomElement(['Hypertension', 'Diabetes', 'Asthma', 'Allergies', 'Surgery']),
-            'details' => fake()->sentence(),
-            'recorded_at' => fake()->date(),
+            'patient_id' => Patient::factory(),
+            'created_by' => null,
+            'condition' => $condition,
+            'details' => $details,
+            'recorded_at' => fake()->dateTimeBetween('-5 years', 'now'),
         ];
     }
 }

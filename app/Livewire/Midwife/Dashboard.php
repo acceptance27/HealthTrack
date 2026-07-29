@@ -3,20 +3,26 @@
 namespace App\Livewire\Midwife;
 
 use App\Models\Appointment;
-use App\Models\InventoryItem;
-use App\Models\PatientProfile;
+use App\Models\Patient;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Layout('components.layouts.app')]
+#[Title('Midwife Dashboard')]
 class Dashboard extends Component
 {
     public function render()
     {
-        $barangayId = auth()->user()->barangay_id;
-
         return view('livewire.midwife.dashboard', [
-            'patientsCount' => PatientProfile::forBarangay($barangayId)->count(),
-            'appointmentsToday' => Appointment::forBarangay($barangayId)->whereDate('scheduled_at', today())->count(),
-            'lowStockCount' => InventoryItem::forBarangay($barangayId)->whereColumn('quantity_on_hand', '<=', 'reorder_level')->count(),
+            'patientCount' => Patient::count(),
+            'appointmentsToday' => Appointment::today()->count(),
+            'upcomingCount' => Appointment::upcoming()->count(),
+            'todaysAppointments' => Appointment::today()
+                ->with('patient')
+                ->orderBy('scheduled_at')
+                ->get(),
+            'recentPatients' => Patient::latest()->limit(5)->get(),
         ]);
     }
 }

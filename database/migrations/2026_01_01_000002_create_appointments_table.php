@@ -8,19 +8,22 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('appointments', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('barangay_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('patient_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
+
+            // The midwife who scheduled it. Keep the appointment if the
+            // account is later removed, so history is not lost.
             $table->foreignId('midwife_id')->nullable()->constrained('users')->nullOnDelete();
+
             $table->dateTime('scheduled_at');
             $table->string('status')->default('pending');
             $table->text('reason');
             $table->text('notes')->nullable();
             $table->timestamps();
 
-            $table->index(['barangay_id', 'scheduled_at']);
-            $table->index(['barangay_id', 'patient_id']);
+            $table->index('scheduled_at');
+            $table->index(['patient_id', 'scheduled_at']);
         });
     }
 
