@@ -11,7 +11,7 @@
 |
 */
 
-use App\Livewire\ClinicalRecords;
+use App\Livewire\Shared\ClinicalRecords;
 use App\Models\Diagnosis;
 use App\Models\Patient;
 use App\Models\User;

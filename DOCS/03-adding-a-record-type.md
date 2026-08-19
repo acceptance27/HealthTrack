@@ -2,7 +2,7 @@
 
 The five clinical record types — diagnoses, lab values, doctor's notes, medical
 history and allergies — are all rendered by one component,
-`App\Livewire\ClinicalRecords`, driven by `config/healthtrack.php`.
+`App\Livewire\Shared\ClinicalRecords`, driven by `config/healthtrack.php`.
 
 That means most changes here are config changes.
 

@@ -10,7 +10,7 @@
 |
 */
 
-use App\Livewire\ClinicalRecords;
+use App\Livewire\Shared\ClinicalRecords;
 use App\Models\Diagnosis;
 use App\Models\Patient;
 use Livewire\Livewire;

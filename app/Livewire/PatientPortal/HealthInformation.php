@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Patient;
+namespace App\Livewire\PatientPortal;
 
 use App\Models\Patient;
 use Livewire\Attributes\Layout;
@@ -22,10 +22,10 @@ class HealthInformation extends Component
         $patient = auth()->user()->patient;
 
         if (! $patient instanceof Patient) {
-            return view('livewire.patient.no-record');
+            return view('livewire.patient-portal.no-record');
         }
 
-        return view('livewire.patient.health-information', [
+        return view('livewire.patient-portal.health-information', [
             'patient' => $patient,
             'recordTypes' => config('healthtrack.records'),
             'appointments' => $patient->appointments()

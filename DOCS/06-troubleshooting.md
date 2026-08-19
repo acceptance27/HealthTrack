@@ -86,8 +86,8 @@ This is the most common Livewire error by a wide margin.
 
 ### `Unable to find component: [xyz]`
 
-The class name and the tag do not match. `<livewire:clinical-records />` maps to
-`App\Livewire\ClinicalRecords`. Check the namespace matches the folder, then:
+The class name and the tag do not match. `<livewire:shared.clinical-records />` maps to
+`App\Livewire\Shared\ClinicalRecords`. Check the namespace matches the folder, then:
 
 ```bash
 php artisan optimize:clear

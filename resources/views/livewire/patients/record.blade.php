@@ -191,7 +191,7 @@
             @else
                 {{-- Every other tab is a clinical record type. One component
                      handles all of them. --}}
-                <livewire:clinical-records
+                <livewire:shared.clinical-records
                     :patient="$patient"
                     :type="$section"
                     :key="'records-'.$section.'-'.$patient->id"

@@ -86,10 +86,10 @@ App\Livewire\Patients\Record
         v
 resources/views/livewire/patients/record.blade.php
    sees section is not "general", so renders:
-   <livewire:clinical-records :patient="$patient" type="diagnoses" />
+   <livewire:shared.clinical-records :patient="$patient" type="diagnoses" />
         |
         v
-App\Livewire\ClinicalRecords
+App\Livewire\Shared\ClinicalRecords
    reads config('healthtrack.records.diagnoses')
    queries the Diagnosis model
         |
@@ -214,7 +214,7 @@ gone, and reintroducing it would be a significant change, not a small one.
 
 They are **not** hard-coded in five places. `config/healthtrack.php` declares
 each one — its model, its label, its date column, and each field with its
-validation rules. One component, `App\Livewire\ClinicalRecords`, reads that
+validation rules. One component, `App\Livewire\Shared\ClinicalRecords`, reads that
 config and renders the table and the form for whichever type it is given.
 
 This is why the midwife's record screen and the patient's read-only portal

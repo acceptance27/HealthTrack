@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Shared;
 
 use App\Models\Patient;
 use Illuminate\Database\Eloquent\Model;
@@ -16,8 +16,8 @@ use Livewire\Component;
  * Livewire classes and Blade templates. Which fields it shows, how it
  * validates them and what it calls them all come from config/healthtrack.php:
  *
- *     <livewire:clinical-records :patient="$patient" type="diagnoses" />
- *     <livewire:clinical-records :patient="$patient" type="allergies" read-only />
+ *     <livewire:shared.clinical-records :patient="$patient" type="diagnoses" />
+ *     <livewire:shared.clinical-records :patient="$patient" type="allergies" read-only />
  *
  * To add a field, or a whole new record type, edit that config file. You
  * should not need to touch this class. See DOCS/03-adding-a-record-type.md.
@@ -186,7 +186,7 @@ class ClinicalRecords extends Component
 
     public function render()
     {
-        return view('livewire.clinical-records', [
+        return view('livewire.shared.clinical-records', [
             'records' => $this->records(),
             'totalRecords' => $this->modelClass()::where('patient_id', $this->patient->id)->count(),
         ]);

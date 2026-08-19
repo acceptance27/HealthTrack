@@ -47,7 +47,7 @@
     {{-- One read-only panel per clinical record type. Adding a type to
          config/healthtrack.php makes it appear here automatically. --}}
     @foreach ($recordTypes as $key => $definition)
-        <livewire:clinical-records
+        <livewire:shared.clinical-records
             :patient="$patient"
             :type="$key"
             :read-only="true"
