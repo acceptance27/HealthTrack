@@ -1,6 +1,6 @@
 {{-- Rendered by Fortify. See App\Providers\FortifyServiceProvider. --}}
 <x-layouts.guest title="Sign in">
-    <h1 class="mb-1 text-xl font-bold">Sign in</h1>
+    <h1 class="mb-1 text-xl font-bold">HealthTrack Sign in</h1>
     <p class="ht-muted mb-4 text-sm">Use the account issued by the health centre.</p>
 
     @if ($errors->any())
