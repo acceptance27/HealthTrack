@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\PatientPortal;
+namespace App\Livewire\Patient;
 
 use App\Models\Patient;
 use Livewire\Attributes\Layout;
@@ -18,10 +18,10 @@ class Dashboard extends Component
         // A patient account should always have a matching patient record, but
         // if the link is missing show an empty state rather than a 500.
         if (! $patient instanceof Patient) {
-            return view('livewire.patient-portal.no-record');
+            return view('livewire.patient.no-record');
         }
 
-        return view('livewire.patient-portal.dashboard', [
+        return view('livewire.patient.dashboard', [
             'patient' => $patient,
             'upcomingAppointments' => $patient->appointments()
                 ->upcoming()

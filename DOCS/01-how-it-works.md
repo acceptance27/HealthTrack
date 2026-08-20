@@ -24,7 +24,7 @@ If you are used to Laravel tutorials that use controllers, the mental swap is:
 
 | Tutorial Laravel | HealthTrack |
 |---|---|
-| `PatientController@index` | `App\Livewire\Patients\Index::render()` |
+| `PatientController@index` | `App\Livewire\PatientRegistry\Index::render()` |
 | `PatientController@store` | a `save()` method on the same class |
 | Form request class | a `rules()` method on the same class |
 | `redirect()->back()` after POST | Livewire just re-renders; no page reload |
@@ -78,13 +78,13 @@ routes/web.php
    middleware: auth -> verified -> role:midwife,health_worker
         |
         v
-App\Livewire\Patients\Record
+App\Livewire\PatientRegistry\Record
    mount()   route-model binding turns "12" into a Patient
              $this->authorize('view', $patient)   <- PatientPolicy
-   render()  returns view('livewire.patients.record')
+   render()  returns view('livewire.patient-registry.record')
         |
         v
-resources/views/livewire/patients/record.blade.php
+resources/views/livewire/patient-registry/record.blade.php
    sees section is not "general", so renders:
    <livewire:shared.clinical-records :patient="$patient" type="diagnoses" />
         |

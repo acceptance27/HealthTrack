@@ -17,7 +17,7 @@
 */
 
 use App\Enums\UserRole;
-use App\Livewire\Patients\Record;
+use App\Livewire\PatientRegistry\Record;
 use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;

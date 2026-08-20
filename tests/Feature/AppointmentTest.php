@@ -12,7 +12,7 @@
 
 use App\Enums\AppointmentStatus;
 use App\Livewire\Midwife\Appointments;
-use App\Livewire\Patients\Record;
+use App\Livewire\PatientRegistry\Record;
 use App\Models\Appointment;
 use App\Models\Patient;
 use App\Models\User;

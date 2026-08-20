@@ -157,7 +157,7 @@ Say patients need an occupation.
    <x-field name="occupation" label="Occupation" />
    ```
 4. **Record screen** — add it to the `@foreach` in
-   `resources/views/livewire/patients/record.blade.php`:
+   `resources/views/livewire/patient-registry/record.blade.php`:
    ```php
    'Occupation' => $patient->occupation,
    ```

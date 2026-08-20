@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
-use App\Livewire\Patients\Index;
+use App\Livewire\PatientRegistry\Index;
 use App\Models\Patient;
 use App\Models\User;
 use Livewire\Livewire;

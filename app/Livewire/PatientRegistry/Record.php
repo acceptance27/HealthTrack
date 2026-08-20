@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Patients;
+namespace App\Livewire\PatientRegistry;
 
 use App\Enums\AppointmentStatus;
 use App\Enums\UserRole;
@@ -198,7 +198,7 @@ class Record extends Component
 
     public function render()
     {
-        return view('livewire.patients.record', [
+        return view('livewire.patient-registry.record', [
             'sections' => $this->sections(),
             'appointments' => $this->patient
                 ->appointments()

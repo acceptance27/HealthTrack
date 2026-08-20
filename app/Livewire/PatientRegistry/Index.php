@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Patients;
+namespace App\Livewire\PatientRegistry;
 
 use App\Models\Patient;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -52,7 +52,7 @@ class Index extends Component
             ->orderBy($sortColumn, $this->sortBy === 'newest' ? 'desc' : 'asc')
             ->paginate(15);
 
-        return view('livewire.patients.index', [
+        return view('livewire.patient-registry.index', [
             'patients' => $patients,
         ]);
     }

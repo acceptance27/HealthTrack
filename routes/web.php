@@ -4,10 +4,10 @@ use App\Livewire\HealthWorker\Dashboard as HealthWorkerDashboard;
 use App\Livewire\HealthWorker\RegisterPatient;
 use App\Livewire\Midwife\Appointments;
 use App\Livewire\Midwife\Dashboard as MidwifeDashboard;
-use App\Livewire\PatientPortal\Dashboard as PatientDashboard;
-use App\Livewire\PatientPortal\HealthInformation;
-use App\Livewire\Patients\Index as PatientsIndex;
-use App\Livewire\Patients\Record as PatientsRecord;
+use App\Livewire\Patient\Dashboard as PatientDashboard;
+use App\Livewire\Patient\HealthInformation;
+use App\Livewire\PatientRegistry\Index as PatientsIndex;
+use App\Livewire\PatientRegistry\Record as PatientsRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
