@@ -20,8 +20,29 @@ $script:ToolsDir = Join-Path $env:USERPROFILE 'tools'
 $script:PhpDir   = Join-Path $script:ToolsDir 'php84'
 
 # Pinned so a stale winget manifest cannot break the install. Bump by hand.
-$script:PhpVersion = '8.4.23'
-$script:PhpUrl     = "https://windows.php.net/downloads/releases/php-$($script:PhpVersion)-Win32-vs17-x64.zip"
+$script:PhpVersion = '8.4.24'
+# windows.php.net keeps only the latest 8.4.x in /releases/; older builds are
+# moved to /releases/archives/. Resolve-PhpUrl tries /releases/ first and falls
+# back to /archives/ so a version that got archived still downloads.
+$script:PhpBase    = 'https://windows.php.net/downloads/releases'
+$script:PhpUrl     = "$($script:PhpBase)/php-$($script:PhpVersion)-Win32-vs17-x64.zip"
+
+function Resolve-PhpUrl {
+    param([string]$Version)
+    $candidates = @(
+        "$($script:PhpBase)/php-$Version-Win32-vs17-x64.zip"
+        "$($script:PhpBase)/archives/php-$Version-Win32-vs17-x64.zip"
+    )
+    foreach ($u in $candidates) {
+        try {
+            $r = Invoke-WebRequest -Uri $u -Method Head -UseBasicParsing -TimeoutSec 30 -ErrorAction Stop
+            if ($r.StatusCode -eq 200) { return $u }
+        } catch { }
+    }
+    # Fall through to the canonical /releases/ URL; the caller's 404 message
+    # will point the user at windows.php.net to pick a current version.
+    return $candidates[0]
+}
 
 function Get-ProjectRoot {
     # tools/setup/lib.ps1 -> tools/setup -> tools -> project root
@@ -258,10 +279,11 @@ function Install-Php {
 
     try {
         $ProgressPreference = 'SilentlyContinue'
-        Invoke-WebRequest -Uri $script:PhpUrl -OutFile $zip -UseBasicParsing -TimeoutSec 600
+        $url = Resolve-PhpUrl -Version $script:PhpVersion
+        Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing -TimeoutSec 600
     } catch {
         Write-Log $Log "Download failed: $($_.Exception.Message)"
-        Write-Log $Log "PHP may have archived $($script:PhpVersion). Check windows.php.net/downloads/releases and update `$script:PhpVersion in tools/setup/lib.ps1."
+        Write-Log $Log "PHP $($script:PhpVersion) may have been archived or removed. Check windows.php.net/downloads/releases and update `$script:PhpVersion in tools/setup/lib.ps1."
         return $false
     }
 
