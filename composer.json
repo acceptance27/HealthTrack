@@ -1,5 +1,5 @@
 {
-  "name": "healthtrack/app",
+  "name": "healthtrack/app", 
   "type": "project",
   "description": "HealthTrack barangay patient information and medical history system.",
   "license": "MIT",
