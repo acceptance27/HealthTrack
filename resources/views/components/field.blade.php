@@ -40,7 +40,7 @@
 
     @elseif ($type === 'select')
         <select wire:model="{{ $model }}" class="ht-input">
-            <option value="">-- Select --</option>
+            <option value="">{{ $placeholder ?: '-- Select --' }}</option>
             @foreach ($options as $value => $text)
                 <option value="{{ $value }}">{{ $text }}</option>
             @endforeach

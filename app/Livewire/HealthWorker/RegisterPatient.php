@@ -22,15 +22,21 @@ class RegisterPatient extends Component
 {
     use AuthorizesRequests;
 
-    public string $first_name = '';
-
-    public string $middle_name = '';
-
-    public string $last_name = '';
+    public string $full_name = '';
 
     public string $sex = '';
 
     public string $birthdate = '';
+
+    public string $age = '';
+
+    public string $civil_status = '';
+
+    public string $blood_type = '';
+
+    public string $occupation = '';
+
+    public string $barangay_id_number = '';
 
     public string $contact_number = '';
 
@@ -50,25 +56,31 @@ class RegisterPatient extends Component
     protected function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['nullable', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+            'full_name' => ['required', 'string', 'max:255'],
             'sex' => ['required', 'in:female,male'],
             'birthdate' => ['required', 'date', 'before_or_equal:today'],
-            'contact_number' => ['nullable', 'string', 'max:50'],
+            'age' => ['required', 'integer', 'min:0', 'max:150'],
+            'civil_status' => ['required', 'in:single,married,widowed,separated'],
+            'blood_type' => ['required', 'in:A+,A-,B+,B-,AB+,AB-,O+,O-'],
+            'occupation' => ['required', 'string', 'max:255'],
+            'barangay_id_number' => ['required', 'string', 'max:50'],
+            'contact_number' => ['required', 'string', 'max:50'],
             'address' => ['required', 'string', 'max:500'],
             'philhealth_number' => ['nullable', 'string', 'max:50'],
-            'emergency_contact_name' => ['nullable', 'string', 'max:255'],
-            'emergency_contact_number' => ['nullable', 'string', 'max:50'],
+            'emergency_contact_name' => ['required', 'string', 'max:255'],
+            'emergency_contact_number' => ['required', 'string', 'max:50'],
         ];
     }
 
     protected function validationAttributes(): array
     {
         return [
-            'first_name' => 'first name',
-            'last_name' => 'last name',
+            'full_name' => 'full name',
             'birthdate' => 'date of birth',
+            'age' => 'age',
+            'civil_status' => 'civil status',
+            'blood_type' => 'blood type',
+            'barangay_id_number' => 'Barangay ID number',
             'contact_number' => 'contact number',
             'philhealth_number' => 'PhilHealth number',
             'emergency_contact_name' => 'emergency contact name',
@@ -82,15 +94,24 @@ class RegisterPatient extends Component
 
         $validated = $this->validate();
 
+        $nameParts = preg_split('/\s+/', trim($validated['full_name'])) ?: [];
+        $firstName = array_shift($nameParts);
+        $lastName = count($nameParts) > 0 ? array_pop($nameParts) : $firstName;
+        $middleName = count($nameParts) > 0 ? implode(' ', $nameParts) : null;
+
         // user_id stays null. A midwife links a portal login later if the
         // patient needs one; most walk-ins never will.
         $patient = Patient::create([
             'user_id' => null,
-            'first_name' => $validated['first_name'],
-            'middle_name' => $validated['middle_name'] ?: null,
-            'last_name' => $validated['last_name'],
+            'first_name' => $firstName,
+            'middle_name' => $middleName,
+            'last_name' => $lastName,
             'sex' => $validated['sex'],
             'birthdate' => $validated['birthdate'],
+            'civil_status' => $validated['civil_status'],
+            'blood_type' => $validated['blood_type'],
+            'occupation' => $validated['occupation'],
+            'barangay_id_number' => $validated['barangay_id_number'],
             'contact_number' => $validated['contact_number'] ?: null,
             'address' => $validated['address'],
             'philhealth_number' => $validated['philhealth_number'] ?: null,

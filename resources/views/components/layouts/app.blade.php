@@ -46,7 +46,9 @@
                     <a href="{{ route('patients.index') }}"
                        @if(request()->routeIs('patients.*')) aria-current="page" @endif>Patients</a>
                     <a href="{{ route('health-worker.register-patient') }}"
-                       @if(request()->routeIs('health-worker.register-patient')) aria-current="page" @endif>Register Patient</a>
+                       @if(request()->routeIs('health-worker.register-patient')) aria-current="page" @endif>
+                        Register Patient
+                    </a>
                 @else
                     <a href="{{ route('patient.dashboard') }}"
                        @if(request()->routeIs('patient.dashboard')) aria-current="page" @endif>Dashboard</a>
