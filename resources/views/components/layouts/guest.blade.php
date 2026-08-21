@@ -14,8 +14,8 @@
 </head>
 <body>
     <div class="ht-auth-shell">
-        <div class="w-full max-w-[420px]">
-            <div class="mb-5 text-center">
+        <div class="ht-auth-wrap">
+            <div class="ht-auth-branding">
                 <div class="ht-brand justify-center">
                     <span class="ht-brand-mark">HT</span>
                     <span>HealthTrack</span>
@@ -26,6 +26,12 @@
             <div class="ht-auth-card">
                 {{ $slot }}
             </div>
+
+            @isset($footer)
+                <div class="ht-auth-footer">
+                    {{ $footer }}
+                </div>
+            @endisset
         </div>
     </div>
 </body>
