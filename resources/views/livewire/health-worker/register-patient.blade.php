@@ -36,9 +36,6 @@
 
                 <div>
                     <h2 style="margin: 0;">Personal Information</h2>
-                    <p style="margin: 2px 0 0; color: #6b7280; font-size: 14px;">
-                        Enter the patient's basic information.
-                    </p>
                 </div>
             </div>
 
@@ -125,10 +122,7 @@
                 </div>
 
                 <div>
-                    <h2 style="margin: 0;">Address & Identification</h2>
-                    <p style="margin: 2px 0 0; color: #6b7280; font-size: 14px;">
-                        Provide the patient's address and identification details.
-                    </p>
+                    <h2 style="margin: 0;">Address Information</h2>
                 </div>
             </div>
 
@@ -173,9 +167,6 @@
 
                 <div>
                     <h2 style="margin: 0;">Emergency Contact</h2>
-                    <p style="margin: 2px 0 0; color: #6b7280; font-size: 14px;">
-                        Add someone we can contact in case of emergency.
-                    </p>
                 </div>
             </div>
 
@@ -183,14 +174,14 @@
 
                 <x-field
                     name="emergency_contact_name"
-                    label="Contact Name"
+                    label="Emergency Contact Name"
                     placeholder="Enter contact name"
                     :required="true"
                 />
 
                 <x-field
                     name="emergency_contact_number"
-                    label="Contact Number"
+                    label="Emergency Contact Number"
                     placeholder="09XX XXX XXXX"
                     :required="true"
                 />
