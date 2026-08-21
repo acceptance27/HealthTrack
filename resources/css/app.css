@@ -401,6 +401,528 @@
         padding: 1.5rem;
     }
 
+    .patient-dashboard-shell {
+        display: grid;
+        gap: 1.25rem;
+        width: min(100%, 1200px);
+        margin: 0 auto;
+        padding: 0.25rem 0 0;
+    }
+
+    .patient-welcome-banner,
+    .patient-panel,
+    .patient-metric-card {
+        background: #fff;
+        border: 1px solid rgba(12, 79, 70, 0.08);
+        border-radius: 18px;
+        box-shadow: 0 4px 18px rgba(15, 29, 26, 0.04);
+    }
+
+    .patient-welcome-banner {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        min-height: 145px;
+        padding: 1.5rem 1.5rem 1.5rem 1.25rem;
+        background: linear-gradient(135deg, #0d4a3e 0%, #0f7665 100%);
+        color: #fff;
+        overflow: hidden;
+    }
+
+    .patient-welcome-banner::before {
+        content: "";
+        position: absolute;
+        inset: auto -8% -45% auto;
+        width: 62%;
+        height: 170%;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+        transform: rotate(-16deg);
+    }
+
+    .patient-welcome-banner::after {
+        content: "";
+        position: absolute;
+        inset: auto 8% -24% auto;
+        width: 62%;
+        height: 170%;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.04);
+        transform: rotate(-18deg);
+    }
+
+    .patient-profile-circle {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 66px;
+        height: 66px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        color: #0d4a3e;
+    }
+
+    .patient-profile-circle svg {
+        width: 42px;
+        height: 42px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .patient-welcome-copy {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        gap: 0.35rem;
+    }
+
+    .patient-welcome-copy h1 {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: clamp(2rem, 2.4vw, 3rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        color: #fff;
+    }
+
+    .patient-welcome-copy p {
+        margin: 0;
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .patient-portal-button {
+        position: relative;
+        z-index: 1;
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.06);
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 0.9rem 1.15rem;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+    }
+
+    .patient-portal-button svg,
+    .patient-view-button svg,
+    .patient-summary-button svg,
+    .patient-contact-icon svg,
+    .patient-panel-icon svg,
+    .patient-tip-icon svg,
+    .ht-header-logout svg,
+    .ht-nav svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.9;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .patient-metric-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .patient-metric-card {
+        display: grid;
+        align-content: space-between;
+        gap: 1rem;
+        min-height: 170px;
+        padding: 1rem 1rem 0.9rem;
+        background: #fff;
+    }
+
+    .patient-metric-icon {
+        display: grid;
+        place-items: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(13, 74, 62, 0.08);
+        color: #0d4a3e;
+    }
+
+    .patient-metric-icon svg {
+        width: 24px;
+        height: 24px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .patient-metric-card h3 {
+        margin: 0;
+        color: #1f2a2c;
+        font-size: 1rem;
+        line-height: 1.3;
+        font-weight: 700;
+    }
+
+    .patient-view-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        width: 100%;
+        min-height: 40px;
+        padding: 0.6rem 0.75rem;
+        border: 1px solid rgba(13, 74, 62, 0.18);
+        border-radius: 10px;
+        background: rgba(13, 74, 62, 0.06);
+        color: #0d4a3e;
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+
+    .patient-panel {
+        padding: 1.1rem 1.25rem 1.25rem;
+    }
+
+    .patient-health-summary {
+        display: grid;
+        grid-template-columns: 1.3fr 0.7fr;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .patient-health-copy {
+        display: grid;
+        gap: 0.9rem;
+    }
+
+    .patient-section-header,
+    .patient-tips-heading {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .patient-panel-icon {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(13, 74, 62, 0.09);
+        color: #0d4a3e;
+    }
+
+    .patient-panel-icon-small {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .patient-health-copy h2,
+    .patient-section-header h2,
+    .patient-tips-heading h2 {
+        margin: 0;
+        color: #0d4a3e;
+        font-family: var(--font-sans);
+        font-size: 1.05rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .patient-health-copy p,
+    .patient-section-header p,
+    .patient-tips-heading p {
+        margin: 0;
+        color: #475451;
+        font-size: 0.96rem;
+        line-height: 1.5;
+    }
+
+    .patient-summary-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: fit-content;
+        min-height: 42px;
+        padding: 0.7rem 1rem;
+        border-radius: 10px;
+        background: #0d4a3e;
+        color: #fff;
+        font-size: 0.92rem;
+        font-weight: 700;
+    }
+
+    .patient-health-illustration {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 180px;
+        color: #0d4a3e;
+    }
+
+    .patient-health-illustration svg {
+        width: min(100%, 260px);
+        height: auto;
+    }
+
+    .patient-emergency-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .patient-contact-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        min-height: 132px;
+        padding: 0.95rem 0.85rem;
+        border: 1px solid rgba(13, 74, 62, 0.08);
+        border-radius: 14px;
+        background: #f9fbfa;
+    }
+
+    .patient-contact-icon {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(13, 74, 62, 0.09);
+        color: #0d4a3e;
+        flex-shrink: 0;
+    }
+
+    .patient-contact-body {
+        display: grid;
+        gap: 0.25rem;
+        min-width: 0;
+    }
+
+    .patient-contact-body h3 {
+        margin: 0;
+        color: #1f2a2c;
+        font-size: 0.98rem;
+        font-weight: 800;
+    }
+
+    .patient-contact-body p,
+    .patient-contact-body span {
+        margin: 0;
+        color: #475451;
+        font-size: 0.82rem;
+        line-height: 1.5;
+    }
+
+    .patient-health-tips {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .patient-tip-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.9rem;
+    }
+
+    .patient-tip-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+        min-height: 120px;
+        padding: 1rem 0.75rem;
+        border: 1px solid rgba(13, 74, 62, 0.08);
+        border-radius: 14px;
+        background: #fff;
+        text-align: center;
+    }
+
+    .patient-tip-icon {
+        display: grid;
+        place-items: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        background: rgba(13, 74, 62, 0.08);
+        color: #0d4a3e;
+    }
+
+    .patient-tip-icon svg {
+        width: 22px;
+        height: 22px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.9;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .patient-tip-item span {
+        display: block;
+        color: #1f2a2c;
+        font-size: 0.9rem;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    .ht-topbar {
+        background: linear-gradient(180deg, #0d4a3e, #0b3f36);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: none;
+    }
+
+    .ht-topbar-inner {
+        width: min(100%, 1200px);
+        min-height: 78px;
+        padding: 0.75rem 0.5rem;
+        flex-wrap: nowrap;
+    }
+
+    .ht-brand {
+        gap: 0.7rem;
+        color: #fff;
+        font-size: 1.15rem;
+        font-weight: 800;
+    }
+
+    .ht-brand-mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: #fff;
+        color: #0b3f36;
+        font-size: 0.8rem;
+    }
+
+    .ht-nav {
+        gap: 0.65rem;
+        margin-inline: auto;
+    }
+
+    .ht-nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.7rem 0.85rem;
+        border-radius: 10px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 0.82rem;
+        font-weight: 700;
+    }
+
+    .ht-nav a[aria-current="page"] {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+    }
+
+    .ht-nav svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .ht-user-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+    }
+
+    .ht-user-meta {
+        display: grid;
+        text-align: right;
+    }
+
+    .ht-user-name {
+        color: #fff;
+        font-size: 0.92rem;
+        font-weight: 800;
+        line-height: 1.2;
+    }
+
+    .ht-user-role {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.72rem;
+    }
+
+    .ht-header-logout {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        min-height: 36px;
+        padding: 0.55rem 0.85rem;
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.8rem;
+    }
+
+    @media (max-width: 980px) {
+        .patient-metric-grid,
+        .patient-emergency-grid,
+        .patient-tip-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .patient-health-summary {
+            grid-template-columns: 1fr;
+        }
+
+        .ht-topbar-inner {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .ht-nav {
+            order: 3;
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .patient-welcome-banner {
+            flex-wrap: wrap;
+            padding: 1.25rem 1rem;
+        }
+
+        .patient-portal-button {
+            margin-left: 0;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .patient-metric-grid,
+        .patient-emergency-grid,
+        .patient-tip-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .ht-user-wrap {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .ht-topbar-inner {
+            padding-bottom: 0.9rem;
+        }
+    }
+
     /* --- Record sidebar (patient record screen) ----------------------- */
 
     .ht-record-layout {
