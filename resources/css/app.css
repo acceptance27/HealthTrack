@@ -43,10 +43,7 @@
         min-height: 100vh;
         font-family: var(--font-sans);
         color: var(--color-ink);
-        background:
-            radial-gradient(circle at top right, #f3dcc8, transparent 45%),
-            radial-gradient(circle at 12% 20%, rgba(15, 107, 95, 0.1), transparent 40%),
-            linear-gradient(140deg, var(--color-parchment) 0%, var(--color-parchment-deep) 100%);
+        background: #d8d3ce;
         background-attachment: fixed;
     }
 
@@ -317,23 +314,25 @@
         display: inline-flex;
         align-items: center;
         gap: 0.625rem;
-        font-family: var(--font-display);
-        font-size: 1.0625rem;
+        font-family: var(--font-sans);
+        font-size: 1.8rem;
         font-weight: 800;
-        letter-spacing: 0.5px;
+        letter-spacing: -0.04em;
         color: var(--color-ink);
         text-decoration: none;
+        line-height: 1;
     }
 
     .ht-brand-mark {
         display: grid;
         place-content: center;
-        width: 32px;
-        height: 32px;
+        width: 40px;
+        height: 40px;
         border-radius: 10px;
         background: var(--color-brand-strong);
         color: #fff;
-        font-size: 0.8125rem;
+        font-size: 0.9rem;
+        font-weight: 800;
     }
 
     .ht-nav {
@@ -422,11 +421,288 @@
         display: grid;
         place-items: center;
         min-height: 100vh;
-        padding: 1.5rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .ht-auth-wrap {
+        width: min(100%, 500px);
+    }
+
+    .ht-auth-branding {
+        margin-bottom: 1rem;
+        text-align: center;
     }
 
     .ht-auth-card {
-        width: min(100%, 420px);
-        padding: 1.75rem;
+        width: 100%;
+        padding: 0;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .ht-auth-footer {
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 0.72rem;
+        color: rgba(31, 36, 33, 0.72);
+    }
+
+    .ht-login-panel {
+        padding: 1.4rem 1.6rem 1.05rem;
+    }
+
+    .ht-login-header {
+        text-align: center;
+    }
+
+    .ht-login-header h1 {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: clamp(1.8rem, 2vw, 2.25rem);
+        line-height: 1.2;
+        letter-spacing: -0.05em;
+        color: var(--color-ink);
+        font-weight: 800;
+    }
+
+    .ht-login-header p {
+        margin: 0.35rem 0 0;
+        font-size: 0.95rem;
+        color: var(--color-ink-soft);
+        font-weight: 500;
+    }
+
+    .ht-login-divider {
+        margin: 1.1rem 0 1.25rem;
+        border-top: 1px solid var(--color-line);
+    }
+
+    .ht-select-account {
+        margin-bottom: 1rem;
+    }
+
+    .ht-select-account p {
+        margin: 0 0 0.8rem;
+        text-align: center;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--color-ink-soft);
+    }
+
+    .ht-account-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.7rem;
+    }
+
+    .ht-account-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        min-height: 106px;
+        padding: 0.75rem 0.45rem;
+        border: 1px solid rgba(31, 36, 33, 0.14);
+        border-radius: 12px;
+        background: #f7faf7;
+        color: var(--color-ink-soft);
+        cursor: pointer;
+        text-align: center;
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s, transform 0.2s;
+    }
+
+    .ht-account-card:hover {
+        transform: translateY(-1px);
+        border-color: rgba(15, 107, 95, 0.32);
+    }
+
+    .ht-account-card.is-selected {
+        border-color: rgba(15, 107, 95, 0.45);
+        background: rgba(15, 107, 95, 0.04);
+        box-shadow: 0 0 0 2px rgba(15, 107, 95, 0.08);
+    }
+
+    .ht-account-icon {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(15, 107, 95, 0.08);
+        color: var(--color-brand-strong);
+    }
+
+    .ht-account-icon svg {
+        width: 30px;
+        height: 30px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .ht-input-wrap svg,
+    .ht-button svg,
+    .ht-password-toggle svg {
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .ht-account-card span:last-child {
+        font-size: 0.9rem;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    .ht-login-alert {
+        margin: 0.5rem 0 0.8rem;
+        border-radius: 12px;
+        padding: 0.7rem 0.85rem;
+        font-size: 0.75rem;
+    }
+
+    .ht-login-alert-error {
+        background: rgba(178, 69, 62, 0.08);
+        color: var(--color-danger);
+    }
+
+    .ht-login-alert-success {
+        background: rgba(15, 107, 95, 0.08);
+        color: var(--color-brand-strong);
+    }
+
+    .ht-login-form {
+        display: grid;
+        gap: 0.9rem;
+    }
+
+    .ht-login-field {
+        display: grid;
+        gap: 0.45rem;
+        color: var(--color-ink-soft);
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .ht-input-wrap {
+        position: relative;
+    }
+
+    .ht-input-wrap svg {
+        position: absolute;
+        left: 0.9rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(15, 107, 95, 0.8);
+    }
+
+    .ht-input {
+        width: 100%;
+        padding: 0.82rem 0.9rem 0.82rem 2.7rem;
+        border: 1px solid rgba(31, 36, 33, 0.18);
+        border-radius: 10px;
+        background: #fff;
+        color: var(--color-ink);
+        font-size: 0.92rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .ht-input::placeholder {
+        color: rgba(31, 36, 33, 0.46);
+    }
+
+    .ht-input:focus {
+        outline: none;
+        border-color: rgba(15, 107, 95, 0.55);
+        box-shadow: 0 0 0 3px rgba(15, 107, 95, 0.08);
+    }
+
+    .ht-password-input {
+        padding-right: 2.7rem;
+    }
+
+    .ht-password-toggle {
+        position: absolute;
+        right: 0.7rem;
+        top: 50%;
+        transform: translateY(-50%);
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border: none;
+        border-radius: 8px;
+        background: transparent;
+        color: rgba(31, 36, 33, 0.7);
+        cursor: pointer;
+    }
+
+    .ht-password-toggle:hover {
+        background: rgba(15, 107, 95, 0.06);
+    }
+
+    .ht-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.82rem 1rem;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        background: linear-gradient(180deg, var(--color-brand) 0%, var(--color-brand-strong) 100%);
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .ht-button:hover {
+        opacity: 0.98;
+    }
+
+    .ht-button:active {
+        transform: translateY(1px);
+    }
+
+    .ht-auth-submit {
+        margin-top: 0.25rem;
+    }
+
+    .ht-login-link {
+        display: block;
+        margin-top: 0.25rem;
+        text-align: center;
+        color: var(--color-brand-strong);
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .ht-login-link:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 520px) {
+        .ht-auth-shell {
+            padding: 1rem 0.9rem;
+        }
+
+        .ht-login-panel {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .ht-account-grid {
+            grid-template-columns: 1fr;
+        }
     }
 }
