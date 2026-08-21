@@ -1,6 +1,6 @@
 <div class="grid gap-4">
     <x-page-header
-        title="Hello, {{ $patient->first_name }}"
+        title="Welcome, {{ $patient->first_name }}"
         subtitle="Your records at {{ config('healthtrack.centre.name') }}."
     >
         <x-slot:aside>
