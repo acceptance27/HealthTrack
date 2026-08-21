@@ -32,6 +32,14 @@ class RegisterPatient extends Component
 
     public string $birthdate = '';
 
+    public string $civil_status = '';
+
+    public string $blood_type = '';
+
+    public string $occupation = '';
+
+    public string $barangay_id_number = '';
+
     public string $contact_number = '';
 
     public string $address = '';
@@ -55,11 +63,15 @@ class RegisterPatient extends Component
             'last_name' => ['required', 'string', 'max:255'],
             'sex' => ['required', 'in:female,male'],
             'birthdate' => ['required', 'date', 'before_or_equal:today'],
-            'contact_number' => ['nullable', 'string', 'max:50'],
+            'civil_status' => ['required', 'in:single,married,widowed,separated'],
+            'blood_type' => ['required', 'in:A+,A-,B+,B-,AB+,AB-,O+,O-'],
+            'occupation' => ['required', 'string', 'max:255'],
+            'barangay_id_number' => ['required', 'string', 'max:50'],
+            'contact_number' => ['required', 'string', 'max:50'],
             'address' => ['required', 'string', 'max:500'],
             'philhealth_number' => ['nullable', 'string', 'max:50'],
-            'emergency_contact_name' => ['nullable', 'string', 'max:255'],
-            'emergency_contact_number' => ['nullable', 'string', 'max:50'],
+            'emergency_contact_name' => ['required', 'string', 'max:255'],
+            'emergency_contact_number' => ['required', 'string', 'max:50'],
         ];
     }
 
@@ -69,6 +81,9 @@ class RegisterPatient extends Component
             'first_name' => 'first name',
             'last_name' => 'last name',
             'birthdate' => 'date of birth',
+            'civil_status' => 'civil status',
+            'blood_type' => 'blood type',
+            'barangay_id_number' => 'Barangay ID number',
             'contact_number' => 'contact number',
             'philhealth_number' => 'PhilHealth number',
             'emergency_contact_name' => 'emergency contact name',
@@ -91,6 +106,10 @@ class RegisterPatient extends Component
             'last_name' => $validated['last_name'],
             'sex' => $validated['sex'],
             'birthdate' => $validated['birthdate'],
+            'civil_status' => $validated['civil_status'],
+            'blood_type' => $validated['blood_type'],
+            'occupation' => $validated['occupation'],
+            'barangay_id_number' => $validated['barangay_id_number'],
             'contact_number' => $validated['contact_number'] ?: null,
             'address' => $validated['address'],
             'philhealth_number' => $validated['philhealth_number'] ?: null,

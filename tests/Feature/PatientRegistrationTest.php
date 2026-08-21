@@ -25,8 +25,14 @@ function validPatientDetails(): array
         'last_name' => 'Santos',
         'sex' => 'female',
         'birthdate' => '1995-03-12',
+        'civil_status' => 'single',
+        'blood_type' => 'O+',
+        'occupation' => 'Teacher',
+        'barangay_id_number' => 'BRGY-12345678',
         'address' => '12 Mabini Street, Mambog I',
         'contact_number' => '0917 555 1234',
+        'emergency_contact_name' => 'Juan Santos',
+        'emergency_contact_number' => '0918 555 5678',
     ];
 }
 
