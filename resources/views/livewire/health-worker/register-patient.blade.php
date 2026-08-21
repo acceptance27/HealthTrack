@@ -45,22 +45,9 @@
             <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 
                 <x-field
-                    name="first_name"
-                    label="First Name"
-                    placeholder="Enter first name"
-                    :required="true"
-                />
-
-                <x-field
-                    name="middle_name"
-                    label="Middle Name"
-                    placeholder="Enter middle name"
-                />
-
-                <x-field
-                    name="last_name"
-                    label="Last Name"
-                    placeholder="Enter last name"
+                    name="full_name"
+                    label="Full Name"
+                    placeholder="Enter full name"
                     :required="true"
                 />
 
@@ -70,15 +57,8 @@
                         <span style="color: var(--color-danger);">*</span>
                     </span>
 
-                    <select wire:model="sex" class="ht-input">
-                        <option value="">Select sex</option>
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
-                    </select>
-
-                    @error('sex')
-                        <span class="ht-error">{{ $message }}</span>
-                    @enderror
+                    <input wire:model="sex" type="text" class="ht-input" placeholder="Enter sex">
+                    @error('sex') <span class="ht-error">{{ $message }}</span> @enderror
                 </label>
 
                 <x-field
@@ -90,40 +70,13 @@
 
                 <label class="ht-field">
                     <span>Age</span>
-                    <input
-                        type="text"
-                        value="{{ $birthdate ? \Carbon\Carbon::parse($birthdate)->age : '' }}"
-                        placeholder="Calculated from date of birth"
-                        class="ht-input"
-                        readonly
-                    >
+                    <input wire:model="age" type="number" min="0" max="150" placeholder="Enter age" class="ht-input">
+                    @error('age') <span class="ht-error">{{ $message }}</span> @enderror
                 </label>
 
-                <x-field
-                    name="civil_status"
-                    label="Civil Status"
-                    type="select"
-                    :options="[
-                        'single' => 'Single',
-                        'married' => 'Married',
-                        'widowed' => 'Widowed',
-                        'separated' => 'Separated',
-                    ]"
-                    :required="true"
-                />
+                <x-field name="civil_status" label="Civil Status" placeholder="Enter civil status" :required="true" />
 
-                <x-field
-                    name="blood_type"
-                    label="Blood Type"
-                    type="select"
-                    :options="[
-                        'A+' => 'A+', 'A-' => 'A-',
-                        'B+' => 'B+', 'B-' => 'B-',
-                        'AB+' => 'AB+', 'AB-' => 'AB-',
-                        'O+' => 'O+', 'O-' => 'O-',
-                    ]"
-                    :required="true"
-                />
+                <x-field name="blood_type" label="Blood Type" placeholder="Enter blood type" :required="true" />
 
                 <x-field
                     name="occupation"
@@ -190,12 +143,6 @@
                 />
 
                 <div class="grid gap-3 sm:grid-cols-2">
-
-                    <x-field
-                        name="philhealth_number"
-                        label="PhilHealth Number"
-                        placeholder="Enter PhilHealth number"
-                    />
 
                 </div>
 

@@ -21,10 +21,10 @@ use Livewire\Livewire;
 function validPatientDetails(): array
 {
     return [
-        'first_name' => 'Maria',
-        'last_name' => 'Santos',
+        'full_name' => 'Maria Santos',
         'sex' => 'female',
         'birthdate' => '1995-03-12',
+        'age' => '31',
         'civil_status' => 'single',
         'blood_type' => 'O+',
         'occupation' => 'Teacher',
@@ -70,7 +70,7 @@ it('validates the required demographic fields', function () {
     Livewire::actingAs($healthWorker)
         ->test(RegisterPatient::class)
         ->call('save')
-        ->assertHasErrors(['first_name', 'last_name', 'sex', 'birthdate', 'address']);
+        ->assertHasErrors(['full_name', 'sex', 'birthdate', 'age', 'address']);
 });
 
 it('rejects a birthdate in the future', function () {
