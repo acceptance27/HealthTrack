@@ -83,10 +83,34 @@
 
     .ht-panel > h2,
     .ht-panel > h3 {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
         margin: 0 0 0.75rem;
         font-size: 1rem;
         font-weight: 800;
-        color: var(--color-ink);
+        color: var(--color-brand-strong);
+    }
+
+    .ht-section-icon,
+    .ht-section-icon svg {
+        flex: 0 0 auto;
+    }
+
+    .ht-section-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .ht-section-icon {
+        display: inline-grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: rgba(15, 107, 95, 0.1);
+        color: var(--color-brand-strong);
+        font-size: 1rem;
     }
 
     .ht-muted {
@@ -209,6 +233,19 @@
         font-weight: 700;
         cursor: pointer;
         transition: background 0.15s, opacity 0.15s;
+    }
+
+    .ht-button-icon,
+    .ht-nav-icon {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 auto;
+    }
+
+    .ht-nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
     }
 
     .ht-button:hover { background: var(--color-brand); }
